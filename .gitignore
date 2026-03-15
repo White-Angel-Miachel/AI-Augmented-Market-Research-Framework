@@ -14,8 +14,11 @@ __pycache__/
 output/
 
 # Test scripts
-test_*.py
+# Keep the top-level scripts ignored, but allow the tests/ directory
+test_api.py
+test_nvidia.py
 run_test.py
+
 
 # Config/temp files
 *.config
