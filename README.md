@@ -12,6 +12,8 @@ An LLM-powered research pipeline that automates startup sector analysis and gene
 - **Sector Classification**: Automatically categorize reports by industry vertical
 - **Pitch Brief Generation**: Create structured investment briefs from extracted signals
 - **Excel Export**: Output analysis results in Excel format for easy review
+- **Professional Reports**: Automatically generate formatted **Markdown** and **Word (DOCX)** investment briefs
+
 
 ## Prerequisites
 
@@ -156,7 +158,13 @@ pipeline = MarketResearchPipeline(
 
 ## Output Format
 
+### Professional Reports (MD & DOCX)
+Every analysis automatically generates two professional document formats:
+- **Markdown (.md)**: Ideal for quick previews and developer-friendly documentation.
+- **Word (.docx)**: A professionally styled document with high-quality tables, bold formatting, and consistent layout, ready for VC review.
+
 ### JSON Output
+
 ```json
 {
   "source_file": "report.pdf",
