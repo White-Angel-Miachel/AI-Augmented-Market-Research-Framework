@@ -90,6 +90,21 @@ def upload_and_process():
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump([result], f, indent=2, ensure_ascii=False)
 
+        # Save Excel
+        excel_name = f"analysis_{timestamp}.xlsx"
+        try:
+            import pandas as pd
+            df = pd.DataFrame([{
+                "Source File": result.get("source_file", ""),
+                "Sector": result.get("sector", ""),
+                "Signal Strength": result.get("signals", {}).get("signal_strength", "N/A"),
+                "Pitch Brief": result.get("pitch_brief", "")[:500] + "...",
+                "Processed At": result.get("processed_at", "")
+            }])
+            df.to_excel(OUTPUT_DIR / excel_name, index=False)
+        except Exception as e:
+            print(f"  ERR Error creating Excel in UI: {e}")
+
         # Build output file list
         output_files = []
         md_name = f"{source_name}_analysis_{timestamp}.md"
@@ -99,6 +114,8 @@ def upload_and_process():
             output_files.append({'name': md_name, 'type': 'Markdown', 'icon': 'doc'})
         if (OUTPUT_DIR / docx_name).exists():
             output_files.append({'name': docx_name, 'type': 'Word Document', 'icon': 'docx'})
+        if (OUTPUT_DIR / excel_name).exists():
+            output_files.append({'name': excel_name, 'type': 'Excel Spreadsheet', 'icon': 'xlsx'})
         if json_path.exists():
             output_files.append({'name': json_filename, 'type': 'JSON Data', 'icon': 'json'})
 
@@ -140,8 +157,12 @@ def list_results():
 
         # Find matching files
         files = []
-        for ext in ['md', 'docx']:
+        for ext in ['md', 'docx', 'xlsx']:
             match = OUTPUT_DIR / f"{report_name}_analysis_{timestamp_part}.{ext}"
+            if not match.exists() and ext == 'xlsx':
+                # Excel might not have the report name prefix if generated via UI
+                match = OUTPUT_DIR / f"analysis_{timestamp_part}.{ext}"
+            
             if match.exists():
                 files.append({'name': match.name, 'type': ext.upper()})
 
