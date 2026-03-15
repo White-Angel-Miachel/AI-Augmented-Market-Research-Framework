@@ -10,6 +10,7 @@ from pathlib import Path
 from datetime import datetime
 
 from flask import Flask, render_template, request, jsonify, send_from_directory
+from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -57,14 +58,16 @@ def upload_and_process():
         return jsonify({'error': f'Unsupported file type. Allowed: {", ".join(ALLOWED_EXTENSIONS)}'}), 400
 
     try:
-        # Save uploaded file
-        filename = file.filename
+        # Sanitize filename to prevent path traversal attacks
+        filename = secure_filename(file.filename)
+        if not filename:
+            return jsonify({'error': 'Invalid filename'}), 400
         save_path = UPLOAD_DIR / filename
         file.save(str(save_path))
 
-        # Initialize and run pipeline
+        # Initialize and run pipeline - use NVIDIA model
         pipeline = MarketResearchPipeline(
-            model_name="gemini-2.5-flash",
+            model_name="minimaxai/minimax-m2.5",
             use_api=True
         )
 
@@ -157,7 +160,10 @@ def list_results():
 
 
 if __name__ == '__main__':
+    debug_mode = os.getenv("FLASK_DEBUG", "false").lower() == "true"
     print("\n=== AI Market Research Pipeline ===")
     print("Open http://localhost:5000 in your browser")
+    if debug_mode:
+        print("WARNING: Running in debug mode")
     print("===================================\n")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=debug_mode, host='0.0.0.0', port=5000)
