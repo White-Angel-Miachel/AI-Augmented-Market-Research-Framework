@@ -142,7 +142,7 @@ To change model, simply edit `src/pipeline.py` or modify the pipeline instantiat
 
 ```python
 pipeline = MarketResearchPipeline(
-    model_name="qwen/qwen3.5-122b-a10b"
+    model_name="qwen/qwen2.5-72b-instruct"
 )
 ```
 
