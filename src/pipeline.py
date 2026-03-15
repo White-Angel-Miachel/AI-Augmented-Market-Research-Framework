@@ -10,7 +10,6 @@ from typing import List, Dict, Optional
 from datetime import datetime
 
 from dotenv import load_dotenv
-from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 from google import genai
 from google.genai import types
 from openai import OpenAI
