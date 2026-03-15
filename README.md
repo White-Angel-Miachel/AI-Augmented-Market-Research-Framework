@@ -2,6 +2,9 @@
 
 An LLM-powered research pipeline that automates startup sector analysis and generates structured investment pitch briefs.
 
+### User Interface
+![UI Screenshot](docs/images/ui_screenshot.png)
+
 ## Features
 
 - **Automated Report Processing**: Parse industry reports in PDF, DOCX, and TXT formats
