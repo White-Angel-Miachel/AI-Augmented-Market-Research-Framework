@@ -42,7 +42,7 @@ class MarketResearchPipeline:
     
     def __init__(
         self,
-        model_name: str = "gemini-2.5-flash",
+        model_name: str = "minimaxai/minimax-m2.5",
         use_api: bool = True,
         api_key: Optional[str] = None,
         openai_api_key: Optional[str] = None
@@ -51,9 +51,10 @@ class MarketResearchPipeline:
         Initialize the research pipeline.
         
         Args:
-            model_name: Gemini model to use
-            use_api: If True, use API; else load model locally (not supported for Gemini)
-            api_key: Gemini API token (optional, can use env var)
+            model_name: Model identifier (defaults to minimaxai/minimax-m2.5)
+            use_api: If True, use API; else load model locally
+            api_key: Gemini API token (optional)
+            openai_api_key: NVIDIA/OpenRouter API token (optional)
         """
         self.model_name = model_name
         self.use_api = use_api
