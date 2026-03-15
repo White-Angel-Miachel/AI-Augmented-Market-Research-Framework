@@ -50,9 +50,9 @@ class ReportParser:
     def _parse_pdf(self, path: Path) -> str:
         """Parse PDF file."""
         try:
-            from PyPDF2 import PdfReader
+            from pypdf import PdfReader
         except ImportError:
-            raise ImportError("PyPDF2 required for PDF parsing. Install with: pip install PyPDF2")
+            raise ImportError("pypdf required for PDF parsing. Install with: pip install pypdf")
         
         reader = PdfReader(str(path))
         text_parts = []

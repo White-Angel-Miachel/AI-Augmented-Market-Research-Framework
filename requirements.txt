@@ -9,7 +9,8 @@ torch>=2.1.0
 pandas>=2.0.0
 openpyxl>=3.1.0  # Excel support
 python-docx>=1.0.0  # Word document parsing
-PyPDF2>=3.0.0  # PDF parsing
+pypdf>=4.0.0         # PDF parsing (replaces deprecated PyPDF2)
+
 
 # API & Environment
 python-dotenv>=1.0.0
@@ -28,4 +29,8 @@ openai>=1.0.0
 
 # Web UI
 flask>=3.0.0
+
+# Testing
+pytest>=7.0.0
+
 

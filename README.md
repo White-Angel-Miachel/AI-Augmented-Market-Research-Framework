@@ -134,8 +134,9 @@ Currently default: `minimaxai/minimax-m2.5` (via Nvidia NIM API Integration)
 Because the pipeline uses the OpenAI-compatible client under the hood, you can easily swap out the model and integration URL.
 
 Other supported options via Nvidia build API:
-- `qwen/qwen3.5-122b-a10b`
-- `meta/llama3-70b-instruct`
+- `minimaxai/minimax-m2.5` *(default)*
+- `qwen/qwen2.5-72b-instruct`
+- `meta/llama-3.1-70b-instruct`
 
 To change model, simply edit `src/pipeline.py` or modify the pipeline instantiation dynamically:
 
@@ -184,7 +185,7 @@ pipeline = MarketResearchPipeline(
 - Ensure you have un-commented or pasted your API key into your `.env` file correctly, removing any `Bearer ` text beforehand.
 
 ### PDF parsing issues
-- Ensure PyPDF2 is installed: `pip install PyPDF2`
+- Ensure `pypdf` is installed: `pip install pypdf`
 - Some scanned PDFs may require OCR preprocessing
 
 ### Memory errors with local inference
