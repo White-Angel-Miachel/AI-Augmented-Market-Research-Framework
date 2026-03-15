@@ -10,9 +10,18 @@ __pycache__/
 .idea/
 *.swp
 
-# Output files (optional - remove to track)
-output/*.json
-output/*.xlsx
+# Output files - never push generated reports
+output/
+
+# Test scripts
+test_*.py
+run_test.py
+
+# Config/temp files
+*.config
+
+# Personal/unrelated folders
+julia undertsanding/
 
 # OS files
 .DS_Store
