@@ -13,6 +13,11 @@ An LLM-powered research pipeline that automates startup sector analysis and gene
 - **Pitch Brief Generation**: Create structured investment briefs from extracted signals
 - **Excel Export**: Output analysis results in Excel format for easy review
 
+## Prerequisites
+
+- **Python 3.8+**: Ensure you have Python installed. You can check with `python --version`.
+- **NVIDIA Developer Account**: Required to get your API key. [Sign up here](https://build.nvidia.com/).
+
 ## Quick Start
 
 ### 1. Clone and Setup Environment
