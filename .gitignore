@@ -1,0 +1,24 @@
+# Environment
+.env
+venv/
+__pycache__/
+*.pyc
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Output files (optional - remove to track)
+output/*.json
+output/*.xlsx
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Models (if loaded locally)
+models/
+*.bin
+*.safetensors

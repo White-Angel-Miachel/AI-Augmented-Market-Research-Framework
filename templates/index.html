@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Market Research Pipeline</title>
+    <meta name="description" content="AI-powered market research analysis. Upload industry reports and get structured investment briefs powered by Gemini AI.">
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                </svg>
+            </div>
+            <h1>AI Market Research Pipeline</h1>
+            <p>Upload industry reports &middot; Get structured investment briefs powered by Gemini AI</p>
+        </header>
+
+        <!-- Upload Card -->
+        <div class="card" id="uploadCard">
+            <div class="card-title">
+                <span class="icon upload">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                </span>
+                Upload Report
+            </div>
+
+            <div class="drop-zone" id="dropZone">
+                <input type="file" id="fileInput" accept=".pdf,.docx,.txt">
+                <div class="drop-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--secondary)">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="12" y1="18" x2="12" y2="12"/>
+                        <polyline points="9 15 12 12 15 15"/>
+                    </svg>
+                </div>
+                <h3>Drag & drop your report here</h3>
+                <p>or click to browse files</p>
+                <div class="file-types">
+                    <span>PDF</span>
+                    <span>DOCX</span>
+                    <span>TXT</span>
+                </div>
+            </div>
+
+            <div class="file-info" id="fileInfo">
+                <div class="file-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                </div>
+                <div class="file-details">
+                    <div class="file-name" id="fileName"></div>
+                    <div class="file-size" id="fileSize"></div>
+                </div>
+                <button class="btn-remove" onclick="removeFile(event)" title="Remove file">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+
+            <button class="btn btn-primary" id="uploadBtn" disabled>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+                Analyze Report
+            </button>
+
+            <div class="error-msg" id="errorMsg"></div>
+        </div>
+
+        <!-- Processing State -->
+        <div class="card processing" id="processing">
+            <div class="processing-inner">
+                <div class="progress-ring">
+                    <svg width="80" height="80" viewBox="0 0 80 80">
+                        <circle cx="40" cy="40" r="35" fill="none" stroke="var(--border)" stroke-width="3"/>
+                        <circle class="progress-circle" cx="40" cy="40" r="35" fill="none" stroke="var(--secondary)" stroke-width="3" stroke-dasharray="220" stroke-dashoffset="220" stroke-linecap="round"/>
+                    </svg>
+                    <div class="progress-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M16 12l-4-4-4 4M12 16V8"/>
+                        </svg>
+                    </div>
+                </div>
+                <h3>Analyzing Your Report</h3>
+                <p class="processing-subtitle">Powered by Gemini 2.5 Flash — typically 30-60 seconds</p>
+                <div class="steps">
+                    <div class="step" id="step1">
+                        <span class="step-indicator"></span>
+                        Parsing document content
+                    </div>
+                    <div class="step" id="step2">
+                        <span class="step-indicator"></span>
+                        Classifying sector
+                    </div>
+                    <div class="step" id="step3">
+                        <span class="step-indicator"></span>
+                        Extracting investment signals
+                    </div>
+                    <div class="step" id="step4">
+                        <span class="step-indicator"></span>
+                        Generating pitch brief
+                    </div>
+                    <div class="step" id="step5">
+                        <span class="step-indicator"></span>
+                        Creating output files
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <!-- Result Meta Cards -->
+            <div class="result-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Sector</div>
+                    <div class="meta-value" id="resSector">&mdash;</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Signal Strength</div>
+                    <div class="meta-value highlight" id="resStrength">&mdash;</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Processed</div>
+                    <div class="meta-value" id="resTime">&mdash;</div>
+                </div>
+            </div>
+
+            <!-- Downloads Card -->
+            <div class="card">
+                <div class="card-title">
+                    <span class="icon results">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                    </span>
+                    Download Reports
+                </div>
+                <div class="download-grid" id="downloadGrid"></div>
+            </div>
+
+            <!-- Preview Card -->
+            <div class="card">
+                <div class="card-title-row">
+                    <div class="card-title" style="margin-bottom: 0;">
+                        <span class="icon upload">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                        </span>
+                        Report Preview
+                    </div>
+                    <div class="preview-tabs">
+                        <button class="tab active" onclick="switchTab('rendered')">Rendered</button>
+                        <button class="tab" onclick="switchTab('raw')">Raw Markdown</button>
+                    </div>
+                </div>
+                <div class="preview-box rendered-preview" id="renderedPreview"></div>
+                <div class="preview-box raw-preview" id="rawPreview" style="display: none;"></div>
+            </div>
+
+            <!-- New Analysis Button -->
+            <div style="text-align: center; margin-top: 0.5rem;">
+                <button class="btn btn-new" onclick="newAnalysis()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    New Analysis
+                </button>
+            </div>
+        </div>
+
+        <!-- Previous Results -->
+        <div class="card">
+            <div class="card-title">
+                <span class="icon history">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                </span>
+                Previous Analyses
+            </div>
+            <div class="history-list" id="historyList">
+                <p style="color: var(--text-dim); font-size: 0.85rem; text-align: center; padding: 1rem;">Loading...</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>AI Market Research Pipeline &middot; Powered by Gemini 2.5 Flash</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+# AI-Augmented Market Research Framework Dependencies
+
+# LLM Integration
+transformers>=4.36.0
+huggingface-hub>=0.20.0
+torch>=2.1.0
+
+# Data Processing
+pandas>=2.0.0
+openpyxl>=3.1.0  # Excel support
+python-docx>=1.0.0  # Word document parsing
+PyPDF2>=3.0.0  # PDF parsing
+
+# API & Environment
+python-dotenv>=1.0.0
+requests>=2.31.0
+
+# Text Processing
+tiktoken>=0.5.0  # Token counting
+langchain>=0.1.0  # LLM orchestration (optional)
+
+# Progress & Logging
+tqdm>=4.66.0
+rich>=13.0.0
+
+google-genai>=0.2.0
+openai>=1.0.0
+
+# Web UI
+flask>=3.0.0
+
